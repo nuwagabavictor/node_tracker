@@ -1,0 +1,52 @@
+import { BaseEntity } from "typeorm";
+import { UserRole } from "../enums/enum";
+export declare class User extends BaseEntity {
+    id: number;
+    username: string;
+    email: string;
+    phone: string;
+    password: string;
+    enabled: boolean;
+    locked: boolean;
+    deleted: boolean;
+    twoFactorEnabled: boolean;
+    accountNonExpired: boolean;
+    accountNonLocked: boolean;
+    credentialsNonExpired: boolean;
+    firstTimeLogin: boolean;
+    failedLoginAttempts: number;
+    lockUntil?: Date;
+    role: UserRole;
+    createdAt: Date;
+    updatedAt: Date;
+    static fromJson(params: {
+        username: string;
+        email: string;
+        password: string;
+        role: UserRole;
+        phone: string;
+    }): Promise<User>;
+    enable(): void;
+    disable(): void;
+    unlock(): void;
+    enableTwoFactor(): void;
+    disableTwoFactor(): void;
+    completeFirstLogin(): void;
+    expireAccount(): void;
+    activateAccount(): void;
+    expireCredentials(): void;
+    changeRole(role: UserRole): void;
+    changePassword(newPassword: string): void;
+    delete(): void;
+    recordFailedLogin(maxAttempts: number, lockPeriodMinutes: number): void;
+    recordSuccessfulLogin(): void;
+    isAccountActive(): boolean;
+    canLogin(): boolean;
+    hasTwoFactor(): boolean;
+    getUsername(): string;
+    getPassword(): string;
+    getEmail(): string;
+    getId(): number;
+    getRole(): "ADMIN" | "USER" | "GUEST" | "DRIVER" | "OPERATOR" | "COMPANY" | "SUPER_ADMIN" | "RIDER";
+}
+//# sourceMappingURL=User.d.ts.map

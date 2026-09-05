@@ -1,0 +1,1 @@
+{"version":3,"file":"NotifiableBusinessEvent.d.ts","sourceRoot":"","sources":["../../src/events/NotifiableBusinessEvent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,uBAAuB,EAAC,MAAM,iBAAiB,CAAC;AAExD,MAAM,WAAW,uBAAuB;IACpC,cAAc,IAAI,uBAAuB,CAAC;CAC7C"}

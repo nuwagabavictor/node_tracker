@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const BusinessEventNotifierService_1 = require("./BusinessEventNotifierService");
+const UserCreatedBusinessEvent_1 = require("./initiators/UserCreatedBusinessEvent");
+const EmailRegisterListener_1 = require("./listeners/EmailRegisterListener");
+const TwoFactorBusinessEvent_1 = require("./initiators/TwoFactorBusinessEvent");
+const EmailTwoFactorListener_1 = require("./listeners/EmailTwoFactorListener");
+const PasswordChangeBusinessEvent_1 = require("./initiators/PasswordChangeBusinessEvent");
+const PasswordChangeListener_1 = require("./listeners/PasswordChangeListener");
+const PasswordOtpBusinessEvent_1 = require("./initiators/PasswordOtpBusinessEvent");
+const PasswordOtpListener_1 = require("./listeners/PasswordOtpListener");
+const UserLoggedInBusinessEvent_1 = require("./initiators/UserLoggedInBusinessEvent");
+const GenericNotificationListener_1 = require("./listeners/GenericNotificationListener");
+const NotificationService_1 = require("../shared/NotificationService");
+const notificationService = new NotificationService_1.NotificationService();
+const genericNotificationListener = new GenericNotificationListener_1.GenericNotificationListener(notificationService);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(UserCreatedBusinessEvent_1.UserCreatedBusinessEvent, new EmailRegisterListener_1.EmailRegisterListener());
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(TwoFactorBusinessEvent_1.TwoFactorBusinessEvent, new EmailTwoFactorListener_1.EmailTwoFactorListener());
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(PasswordChangeBusinessEvent_1.PasswordChangeBusinessEvent, new PasswordChangeListener_1.PasswordChangeListener());
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(PasswordOtpBusinessEvent_1.PasswordOtpBusinessEvent, new PasswordOtpListener_1.PasswordOtpListener());
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(UserLoggedInBusinessEvent_1.UserLoggedInBusinessEvent, genericNotificationListener);
+//# sourceMappingURL=EventConfiguration.js.map
