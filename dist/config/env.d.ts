@@ -1,0 +1,36 @@
+import 'dotenv/config';
+export declare const env: {
+    nodeEnv: string;
+    port: number;
+    corsOrigins: string[];
+    dbHost: string;
+    dbUser: string;
+    dbPass: string;
+    dbName: string;
+    dbPort: number;
+    jwtAccessSecret: string;
+    jwtRefreshSecret: string;
+    jwtAccessTtl: string;
+    jwtRefreshTtl: string;
+    filesystemEnabled: boolean;
+    filesystemLocation: string;
+    s3Enabled: boolean;
+    s3Bucket: string;
+    s3Region: string | undefined;
+    s3AccessKeyId: string;
+    s3SecretAccessKey: string;
+    r2Enabled: boolean;
+    r2Bucket: string;
+    r2Endpoint: string;
+    r2AccessKeyId: string;
+    r2SecretAccessKey: string;
+    emailHost: string;
+    emailPort: number;
+    emailUser: string;
+    emailPass: string;
+    secure: boolean;
+    smsSenderId: string;
+    smsApiKey: string;
+    smsUrl: string;
+};
+//# sourceMappingURL=env.d.ts.map
