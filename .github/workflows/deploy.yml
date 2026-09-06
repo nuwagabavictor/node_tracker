@@ -1,4 +1,4 @@
-name: Build and Deploy Restart Finance API
+name: Restart Finance Deploy
 
 on:
   push:
@@ -7,48 +7,56 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Clean Workspace
+        run: |
+          git reset --hard || true
+          git clean -fd || true
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
-          node-version: 22
-          cache: npm
+          ref: main
+          fetch-depth: 0
+          clean: true
+
+      - name: Show Latest Commit
+        run: |
+          git log -1
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          npm ci
 
-      - name: Build Project
-        run: npm run build
+      - name: Build Application
+        run: |
+          npm run build
 
-      # Remove dev dependencies before uploading
-      - name: Keep Production Dependencies Only
+      - name: Remove Dev Dependencies
         run: |
           npm prune --omit=dev
 
-      - name: Copy Files to Server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "dist,node_modules,package.json,package-lock.json"
-          target: "/home/victor/restart-finance"
+      - name: Deploy to Production
+        run: |
+          DEPLOY_DIR="/home/victor/restart-finance"
+
+          mkdir -p "$DEPLOY_DIR"
+
+          rsync -a --delete \
+            --exclude=".env" \
+            "$GITHUB_WORKSPACE/" \
+            "$DEPLOY_DIR/"
 
       - name: Restart Application
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            cd /home/victor/restart-finance
+        run: |
+          cd /home/victor/restart-finance
 
-            # Restart PM2 (or start if first deployment)
-            pm2 restart restart-finance || pm2 start dist/server.js --name restart-finance
+          pm2 reload ecosystem.config.js --update-env || \
+          pm2 start ecosystem.config.js
 
-            pm2 save
+          pm2 save
+
+          pm2 status
