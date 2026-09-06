@@ -121,6 +121,22 @@ let User = User_1 = class User extends typeorm_1.BaseEntity {
         this.lockUntil = undefined;
         this.locked = false;
     }
+    changes(data) {
+        const actualChanges = {};
+        if (data.username !== undefined && data.username !== this.username) {
+            this.username = data.username;
+            actualChanges.username = this.username;
+        }
+        if (data.email !== undefined && data.email !== this.email) {
+            this.email = data.email;
+            actualChanges.email = this.email;
+        }
+        if (data.phone !== undefined && data.phone !== this.phone) {
+            this.phone = data.phone;
+            actualChanges.phone = this.phone;
+        }
+        return actualChanges;
+    }
     // ==========================
     // QUERIES
     // ==========================

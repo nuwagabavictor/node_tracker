@@ -18,7 +18,7 @@ class UserLoggedInBusinessEvent extends AbstractBusinessEvent_1.AbstractBusiness
     }
     toNotification() {
         return {
-            objectType: "User",
+            objectType: BusinessEvent_1.BusinessCategoryType.USER.toString(),
             objectId: this.getAggregateRootId(),
             message: "You successfully logged in to your account.",
             eventType: this.getType(),

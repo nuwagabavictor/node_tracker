@@ -6,12 +6,13 @@ import {
     Index,
     JoinColumn,
     ManyToOne,
-    PrimaryGeneratedColumn
+    PrimaryGeneratedColumn, Unique
 } from "typeorm";
 import {Notification} from "./Notification";
 import {User} from "./User";
 
-@Entity({name:":notification_mapper"})
+@Entity({name:"m_notification_mapper"})
+@Unique(["userId", "notificationId"])
 export class NotificationMapper extends BaseEntity{
 
     @PrimaryGeneratedColumn()

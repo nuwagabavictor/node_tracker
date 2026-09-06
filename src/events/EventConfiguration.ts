@@ -11,6 +11,13 @@ import {UserLoggedInBusinessEvent} from "./initiators/UserLoggedInBusinessEvent"
 import {GenericNotificationListener} from "./listeners/GenericNotificationListener";
 import {NotificationService} from "../shared/NotificationService";
 import {ChangeProfileBusinessEvent} from "./initiators/ChangeProfileBusinessEvent";
+import {UserSkippedDayBusinessEvent} from "./initiators/UserSkippedDayBusinessEvent";
+import {BudgetExceededBusinessEvent} from "./initiators/BudgetExceededBusinessEvent";
+import {BudgetExceededBusinessEmailListener} from "./listeners/BudgetExceededEmailListener";
+import {UserSkippedDayEmailListener} from "./listeners/UserSkippedDayEmailListener";
+import {CategoryCreatedBusinessEvent} from "./initiators/CategoryCreatedBusinessEvent";
+import {BudgetCreatedBusinessEvent} from "./initiators/BudgetCreatedBusinessEvent";
+import {TransactionCreatedBusinessEvent} from "./initiators/TransactionCreatedBusinessEvent";
 
 const notificationService = new NotificationService();
 
@@ -38,4 +45,31 @@ businessEventNotifier.addPostBusinessEventListener(
 
 businessEventNotifier.addPostBusinessEventListener(
     ChangeProfileBusinessEvent, genericNotificationListener
+)
+
+businessEventNotifier.addPostBusinessEventListener(
+    UserSkippedDayBusinessEvent, genericNotificationListener
+)
+businessEventNotifier.addPostBusinessEventListener(
+    BudgetExceededBusinessEvent, genericNotificationListener
+)
+
+businessEventNotifier.addPostBusinessEventListener(
+    CategoryCreatedBusinessEvent, genericNotificationListener
+)
+
+businessEventNotifier.addPostBusinessEventListener(
+    BudgetCreatedBusinessEvent, genericNotificationListener
+)
+businessEventNotifier.addPostBusinessEventListener(
+    TransactionCreatedBusinessEvent, genericNotificationListener
+)
+
+
+businessEventNotifier.addPostBusinessEventListener(
+    BudgetExceededBusinessEvent, new BudgetExceededBusinessEmailListener()
+)
+
+businessEventNotifier.addPostBusinessEventListener(
+    UserSkippedDayBusinessEvent, new UserSkippedDayEmailListener()
 )

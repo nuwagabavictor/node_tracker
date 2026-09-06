@@ -12,6 +12,7 @@ exports.refreshHandler = refreshHandler;
 exports.twoFactorHandler = twoFactorHandler;
 exports.requestPasswordOtp = requestPasswordOtp;
 exports.requestPasswordChange = requestPasswordChange;
+exports.changeProfile = changeProfile;
 const zod_1 = require("zod");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const User_1 = require("../Entities/User");
@@ -26,6 +27,8 @@ const TwoFactorBusinessEvent_1 = require("../events/initiators/TwoFactorBusiness
 const PasswordChangeBusinessEvent_1 = require("../events/initiators/PasswordChangeBusinessEvent");
 const PasswordOtpBusinessEvent_1 = require("../events/initiators/PasswordOtpBusinessEvent");
 const UserLoggedInBusinessEvent_1 = require("../events/initiators/UserLoggedInBusinessEvent");
+const ChangeProfileBusinessEvent_1 = require("../events/initiators/ChangeProfileBusinessEvent");
+const ConfigurationService_1 = require("../shared/ConfigurationService");
 // Validation schemas
 const registerSchema = zod_1.z.object({
     username: zod_1.z.string().min(3),
@@ -33,6 +36,11 @@ const registerSchema = zod_1.z.object({
     role: zod_1.z.string(),
     phone: zod_1.z.string(),
     password: zod_1.z.string().min(8)
+});
+const profileSchema = zod_1.z.object({
+    username: zod_1.z.string().min(3),
+    email: zod_1.z.string().email(),
+    phone: zod_1.z.string(),
 });
 function isRoleType(role) {
     return enum_1.Roles.includes(role);
@@ -59,6 +67,7 @@ exports.passwordFactorSchema = zod_1.z.object({
     password: zod_1.z.string().min(8),
     confirmPassword: zod_1.z.string().min(8)
 });
+const configurationService = new ConfigurationService_1.ConfigurationService();
 // ============================
 // REGISTER
 // ============================
@@ -81,6 +90,7 @@ async function registerHandler(req, res, next) {
             phone: body.phone,
         });
         await user.save();
+        await configurationService.createDefaults(user);
         await BusinessEventNotifierService_1.businessEventNotifier.notifyPostBusinessEvent(new UserCreatedBusinessEvent_1.UserCreatedBusinessEvent(user));
         return res.status(201).json({
             message: "User registered successfully",
@@ -371,6 +381,29 @@ async function requestPasswordChange(req, res, next) {
         await BusinessEventNotifierService_1.businessEventNotifier.notifyPostBusinessEvent(new PasswordChangeBusinessEvent_1.PasswordChangeBusinessEvent(user));
         return res.status(200).json({
             message: "Password changed"
+        });
+    }
+    catch (e) {
+        next(e);
+    }
+}
+async function changeProfile(req, res, next) {
+    try {
+        const body = profileSchema.parse(req.body);
+        const id = Number(req.user?.id);
+        const user = await User_1.User.findOne({ where: { id: id } });
+        if (!user) {
+            throw new Error("User not found");
+        }
+        const changes = user.changes({ email: body.email, phone: body.phone, username: body.username });
+        if (Object.keys(changes).length > 0) {
+            await user.save();
+        }
+        await BusinessEventNotifierService_1.businessEventNotifier.notifyPostBusinessEvent(new ChangeProfileBusinessEvent_1.ChangeProfileBusinessEvent(user));
+        return res.status(200).json({
+            message: "Profile Updated",
+            userId: user.id,
+            changes: changes
         });
     }
     catch (e) {
