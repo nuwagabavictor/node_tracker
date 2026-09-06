@@ -26,7 +26,7 @@ export class UserLoggedInBusinessEvent extends AbstractBusinessEvent<User> imple
 
     toNotification(): GeneralNotificationData {
         return {
-            objectType: "User",
+            objectType: BusinessCategoryType.USER.toString(),
             objectId: this.getAggregateRootId(),
             message: "You successfully logged in to your account.",
             eventType: this.getType(),

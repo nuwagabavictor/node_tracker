@@ -20,7 +20,7 @@ exports.env = {
     dbPort: Number(process.env.DB_PORT ?? 3306),
     jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
-    jwtAccessTtl: process.env.JWT_ACCESS_TTL ?? "15m",
+    jwtAccessTtl: process.env.JWT_ACCESS_TTL ?? "50m",
     jwtRefreshTtl: process.env.JWT_REFRESH_TTL ?? "30d",
     filesystemEnabled: process.env.FILESYSTEM_ENABLED === "true",
     filesystemLocation: process.env.FILESYSTEM_LOCATION ?? "./storage",

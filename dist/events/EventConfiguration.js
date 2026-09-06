@@ -12,6 +12,14 @@ const PasswordOtpListener_1 = require("./listeners/PasswordOtpListener");
 const UserLoggedInBusinessEvent_1 = require("./initiators/UserLoggedInBusinessEvent");
 const GenericNotificationListener_1 = require("./listeners/GenericNotificationListener");
 const NotificationService_1 = require("../shared/NotificationService");
+const ChangeProfileBusinessEvent_1 = require("./initiators/ChangeProfileBusinessEvent");
+const UserSkippedDayBusinessEvent_1 = require("./initiators/UserSkippedDayBusinessEvent");
+const BudgetExceededBusinessEvent_1 = require("./initiators/BudgetExceededBusinessEvent");
+const BudgetExceededEmailListener_1 = require("./listeners/BudgetExceededEmailListener");
+const UserSkippedDayEmailListener_1 = require("./listeners/UserSkippedDayEmailListener");
+const CategoryCreatedBusinessEvent_1 = require("./initiators/CategoryCreatedBusinessEvent");
+const BudgetCreatedBusinessEvent_1 = require("./initiators/BudgetCreatedBusinessEvent");
+const TransactionCreatedBusinessEvent_1 = require("./initiators/TransactionCreatedBusinessEvent");
 const notificationService = new NotificationService_1.NotificationService();
 const genericNotificationListener = new GenericNotificationListener_1.GenericNotificationListener(notificationService);
 BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(UserCreatedBusinessEvent_1.UserCreatedBusinessEvent, new EmailRegisterListener_1.EmailRegisterListener());
@@ -19,4 +27,12 @@ BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListene
 BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(PasswordChangeBusinessEvent_1.PasswordChangeBusinessEvent, new PasswordChangeListener_1.PasswordChangeListener());
 BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(PasswordOtpBusinessEvent_1.PasswordOtpBusinessEvent, new PasswordOtpListener_1.PasswordOtpListener());
 BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(UserLoggedInBusinessEvent_1.UserLoggedInBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(ChangeProfileBusinessEvent_1.ChangeProfileBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(UserSkippedDayBusinessEvent_1.UserSkippedDayBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(BudgetExceededBusinessEvent_1.BudgetExceededBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(CategoryCreatedBusinessEvent_1.CategoryCreatedBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(BudgetCreatedBusinessEvent_1.BudgetCreatedBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(TransactionCreatedBusinessEvent_1.TransactionCreatedBusinessEvent, genericNotificationListener);
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(BudgetExceededBusinessEvent_1.BudgetExceededBusinessEvent, new BudgetExceededEmailListener_1.BudgetExceededBusinessEmailListener());
+BusinessEventNotifierService_1.businessEventNotifier.addPostBusinessEventListener(UserSkippedDayBusinessEvent_1.UserSkippedDayBusinessEvent, new UserSkippedDayEmailListener_1.UserSkippedDayEmailListener());
 //# sourceMappingURL=EventConfiguration.js.map

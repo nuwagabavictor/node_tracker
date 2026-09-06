@@ -6,7 +6,7 @@ import {notFoundHandler, errorHandler} from "./Middleware/ErrorHandler";
 import router from "./Routers";
 import rateLimit from 'express-rate-limit'
 import "./events/EventConfiguration"
-
+import "./schedulers/RegisterJobs"
 
 
 export const app = express();

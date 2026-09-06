@@ -19,4 +19,5 @@ export declare function refreshHandler(req: Request, res: Response, next: NextFu
 export declare function twoFactorHandler(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 export declare function requestPasswordOtp(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 export declare function requestPasswordChange(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+export declare function changeProfile(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 //# sourceMappingURL=UserController.d.ts.map

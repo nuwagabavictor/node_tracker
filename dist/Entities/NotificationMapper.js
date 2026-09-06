@@ -64,6 +64,7 @@ __decorate([
     __metadata("design:type", Date)
 ], NotificationMapper.prototype, "createdAt", void 0);
 exports.NotificationMapper = NotificationMapper = NotificationMapper_1 = __decorate([
-    (0, typeorm_1.Entity)({ name: ":notification_mapper" })
+    (0, typeorm_1.Entity)({ name: "m_notification_mapper" }),
+    (0, typeorm_1.Unique)(["userId", "notificationId"])
 ], NotificationMapper);
 //# sourceMappingURL=NotificationMapper.js.map

@@ -40,6 +40,11 @@ export declare class User extends BaseEntity {
     delete(): void;
     recordFailedLogin(maxAttempts: number, lockPeriodMinutes: number): void;
     recordSuccessfulLogin(): void;
+    changes(data: {
+        username?: string;
+        email?: string;
+        phone?: string;
+    }): Record<string, unknown>;
     isAccountActive(): boolean;
     canLogin(): boolean;
     hasTwoFactor(): boolean;

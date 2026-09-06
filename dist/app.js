@@ -12,6 +12,7 @@ const ErrorHandler_1 = require("./Middleware/ErrorHandler");
 const Routers_1 = __importDefault(require("./Routers"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 require("./events/EventConfiguration");
+require("./schedulers/RegisterJobs");
 exports.app = (0, express_1.default)();
 exports.app.use((0, helmet_1.default)());
 exports.app.use(express_1.default.json());

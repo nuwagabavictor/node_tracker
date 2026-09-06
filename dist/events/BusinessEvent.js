@@ -20,11 +20,22 @@ var BusinessEventType;
     BusinessEventType["USER_PROFILE_PASSWORD_CHANGED"] = "USER_PROFILE_PASSWORD_CHANGED";
     BusinessEventType["USER_PROFILE_TWO_FACTOR_ENABLED"] = "USER_PROFILE_TWO_FACTOR_ENABLED";
     BusinessEventType["USER_PROFILE_TWO_FACTOR_DISABLED"] = "USER_PROFILE_TWO_FACTOR_DISABLED";
+    BusinessEventType["DAY_SKIPPED"] = "DAY_SKIPPED";
+    BusinessEventType["BUDGET_CREATED"] = "BUDGET_CREATED";
+    BusinessEventType["BUDGET_UPDATED"] = "BUDGET_UPDATED";
+    BusinessEventType["TRANSACTION_CREATED"] = "TRANSACTION_CREATED";
+    BusinessEventType["TRANSACTION_UPDATED"] = "TRANSACTION_UPDATED";
+    BusinessEventType["BUDGET_EXCEEDED"] = "BUDGET_EXCEEDED";
+    BusinessEventType["CATEGORY_CREATED"] = "CATEGORY_CREATED";
 })(BusinessEventType || (exports.BusinessEventType = BusinessEventType = {}));
 var BusinessCategoryType;
 (function (BusinessCategoryType) {
     BusinessCategoryType["USER"] = "USER";
     BusinessCategoryType["TWO_FACTOR"] = "TWO_FACTOR";
     BusinessCategoryType["PASSWORD"] = "PASSWORD";
+    BusinessCategoryType["TRANSACTION"] = "TRANSACTION";
+    BusinessCategoryType["BUDGET"] = "BUDGET";
+    BusinessCategoryType["GLOBAL_CONFIGURATION"] = "GLOBAL_CONFIGURATION";
+    BusinessCategoryType["CATEGORY"] = "CATEGORY";
 })(BusinessCategoryType || (exports.BusinessCategoryType = BusinessCategoryType = {}));
 //# sourceMappingURL=BusinessEvent.js.map

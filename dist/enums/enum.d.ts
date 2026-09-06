@@ -2,6 +2,13 @@ export declare const Roles: readonly ["ADMIN", "USER", "GUEST", "DRIVER", "OPERA
 export type UserRole = (typeof Roles)[number];
 export declare const StorageTypes: readonly ["FILESYSTEM", "S3", "R2"];
 export type StorageType = (typeof StorageTypes)[number];
+export declare const CategoryTypes: readonly ["INCOME", "EXPENSE"];
+export type CategoryType = (typeof CategoryTypes)[number];
+export declare enum BudgetPeriod {
+    WEEKLY = "WEEKLY",
+    MONTHLY = "MONTHLY",
+    YEARLY = "YEARLY"
+}
 export declare const KycSubjectTypes: readonly ["OPERATOR", "DRIVER", "COMPANY"];
 export type KycSubjectType = typeof KycSubjectTypes[number];
 export declare const KycDocumentTypes: readonly ["NATIONAL_ID", "PASSPORT", "DRIVERS_LICENSE", "PROOF_OF_ADDRESS", "SELFIE_WITH_ID", "VEHICLE_REGISTRATION", "VEHICLE_INSURANCE", "BUSINESS_REGISTRATION_CERT", "TAX_PIN_CERTIFICATE", "DIRECTOR_ID"];

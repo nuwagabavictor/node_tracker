@@ -14,6 +14,7 @@ import {PasswordChangeBusinessEvent} from "../events/initiators/PasswordChangeBu
 import {PasswordOtpBusinessEvent} from "../events/initiators/PasswordOtpBusinessEvent";
 import {UserLoggedInBusinessEvent} from "../events/initiators/UserLoggedInBusinessEvent";
 import {ChangeProfileBusinessEvent} from "../events/initiators/ChangeProfileBusinessEvent";
+import {ConfigurationService} from "../shared/ConfigurationService";
 
 
 // Validation schemas
@@ -76,6 +77,8 @@ export const passwordFactorSchema = z.object({
     confirmPassword: z.string().min(8)
 });
 
+const configurationService = new ConfigurationService()
+
 
 
 // ============================
@@ -115,6 +118,8 @@ export async function registerHandler(req: Request, res: Response, next: NextFun
 
 
         await user.save();
+
+        await configurationService.createDefaults(user);
 
         await businessEventNotifier.notifyPostBusinessEvent(new UserCreatedBusinessEvent(user))
 
@@ -534,7 +539,7 @@ export async function changeProfile(req: Request, res:Response, next: NextFuncti
 
         const changes = user.changes({email: body.email, phone: body.phone, username: body.username});
 
-        if (Object.keys(changes).length !== 0) {
+        if (Object.keys(changes).length > 0) {
             await user.save();
         }
 

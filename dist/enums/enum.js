@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KYC_REQUIREMENTS = exports.KycDocumentStatuses = exports.KycProfileStatuses = exports.KycDocumentTypes = exports.KycSubjectTypes = exports.StorageTypes = exports.Roles = void 0;
+exports.KYC_REQUIREMENTS = exports.KycDocumentStatuses = exports.KycProfileStatuses = exports.KycDocumentTypes = exports.KycSubjectTypes = exports.BudgetPeriod = exports.CategoryTypes = exports.StorageTypes = exports.Roles = void 0;
 exports.Roles = [
     "ADMIN", "USER", "GUEST", "DRIVER", "OPERATOR", "COMPANY", "SUPER_ADMIN", "RIDER"
 ];
@@ -9,6 +9,16 @@ exports.StorageTypes = [
     "S3",
     "R2"
 ];
+exports.CategoryTypes = [
+    "INCOME",
+    "EXPENSE"
+];
+var BudgetPeriod;
+(function (BudgetPeriod) {
+    BudgetPeriod["WEEKLY"] = "WEEKLY";
+    BudgetPeriod["MONTHLY"] = "MONTHLY";
+    BudgetPeriod["YEARLY"] = "YEARLY";
+})(BudgetPeriod || (exports.BudgetPeriod = BudgetPeriod = {}));
 exports.KycSubjectTypes = ["OPERATOR", "DRIVER", "COMPANY"];
 exports.KycDocumentTypes = [
     "NATIONAL_ID",

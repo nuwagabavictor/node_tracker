@@ -12,7 +12,17 @@ export const StorageTypes = [
 
 export type StorageType = (typeof StorageTypes)[number];
 
+export const CategoryTypes =[
+    "INCOME",
+    "EXPENSE"
+] as const;
+export type CategoryType = (typeof CategoryTypes)[number];
 
+export enum BudgetPeriod{
+    WEEKLY = "WEEKLY",
+    MONTHLY = "MONTHLY",
+    YEARLY = "YEARLY"
+}
 
 export const KycSubjectTypes = ["OPERATOR", "DRIVER", "COMPANY"] as const;
 export type KycSubjectType = typeof KycSubjectTypes[number];
