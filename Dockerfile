@@ -36,8 +36,13 @@ RUN npm ci --omit=dev
 # Copy compiled application
 COPY --from=builder /app/dist ./dist
 
+
+# Copy startup script
+COPY docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+
 # Application port
 EXPOSE 4000
 
 # Start application
-CMD ["node", "dist/server.js"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
