@@ -51,6 +51,9 @@ jobs:
 
             echo "Installing production dependencies..."
             npm ci --omit=dev
+            
+            echo "Running database migrations..."
+            npm run migration:run:prod
 
             echo "Restarting PM2..."
             pm2 reload ecosystem.config.js --update-env || \
