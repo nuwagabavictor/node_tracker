@@ -1,10 +1,15 @@
 import {User} from "../Entities/User";
 import {GlobalConfiguration} from "../Entities/GlobalConfiguration";
 import {GlobalConstants} from "../constants/GlobalConstants";
+import {AppDataSource} from "../Database/database";
+import {EntityManager} from "typeorm";
 
 export class ConfigurationService {
 
-    async createDefaults(user: User): Promise<void> {
+    async createDefaults(
+        user: User,
+        manager: EntityManager
+    ): Promise<void> {
 
         const configurations = [
             GlobalConfiguration.createConfig({
@@ -18,6 +23,6 @@ export class ConfigurationService {
             })
         ];
 
-        await GlobalConfiguration.save(configurations);
+        await manager.save(GlobalConfiguration, configurations);
     }
 }

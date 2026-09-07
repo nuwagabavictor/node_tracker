@@ -15,6 +15,7 @@ import {PasswordOtpBusinessEvent} from "../events/initiators/PasswordOtpBusiness
 import {UserLoggedInBusinessEvent} from "../events/initiators/UserLoggedInBusinessEvent";
 import {ChangeProfileBusinessEvent} from "../events/initiators/ChangeProfileBusinessEvent";
 import {ConfigurationService} from "../shared/ConfigurationService";
+import {AppDataSource} from "../Database/database";
 
 
 // Validation schemas
@@ -96,45 +97,46 @@ export async function registerHandler(req: Request, res: Response, next: NextFun
         }
 
 
-        const existing = await User.findOne({where:{email: body.email}});
+       await AppDataSource.transaction(async (manager) =>{
+
+            const existing = await manager.findOne(User, {where:{email: body.email}});
 
 
-        if(existing){
-            throw ApiError.conflict("Email already in use");
+            if(existing){
+                throw ApiError.conflict("Email already in use");
 
-        }
-
-
-        const hashedPassword = await bcrypt.hash(body.password, 10);
-
-
-        const user = await User.fromJson({
-                username: body.username,
-                email: body.email,
-                password: hashedPassword,
-                role: body.role as UserRole,
-                phone: body.phone,
-            });
-
-
-        await user.save();
-
-        await configurationService.createDefaults(user);
-
-        await businessEventNotifier.notifyPostBusinessEvent(new UserCreatedBusinessEvent(user))
-
-
-        return res.status(201).json({
-            message:"User registered successfully",
-
-            user:{
-                id:user.id,
-                username:user.username,
-                email:user.email
             }
 
-        });
 
+            const hashedPassword = await bcrypt.hash(body.password, 10);
+
+
+            const user = await User.fromJson({
+                    username: body.username,
+                    email: body.email,
+                    password: hashedPassword,
+                    role: body.role as UserRole,
+                    phone: body.phone,
+                });
+
+
+            await manager.save(user);
+
+            await configurationService.createDefaults(user, manager);
+
+            await businessEventNotifier.notifyPostBusinessEvent(new UserCreatedBusinessEvent(user))
+
+           return res.status(201).json({
+               message:"User registered successfully",
+
+               user:{
+                   id:user.id,
+                   username:user.username,
+                   email:user.email
+               }
+
+           });
+       })
 
     }catch(error){
 
