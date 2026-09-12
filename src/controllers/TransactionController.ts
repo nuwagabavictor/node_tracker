@@ -129,7 +129,7 @@ export async function findAllTransaction(req: Request, res: Response, next: Next
 
         const data = transactions.map(transaction => ({
             id: transaction.id,
-            category: transaction.category.name,
+            categoryName: transaction.category.name,
             categoryId: transaction.category.id,
             categoryType: transaction.category.type,
             transactionType: transaction.type,

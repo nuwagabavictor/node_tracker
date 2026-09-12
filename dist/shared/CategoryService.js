@@ -10,7 +10,12 @@ class CategoryService {
         const user = await User_1.User.findOne({ where: { id: data.userId } });
         if (!user)
             throw new Error("User not found");
-        const category = await Category_1.Category.findOne({ where: { name: data.name } });
+        const category = await Category_1.Category.findOne({
+            where: {
+                name: data.name,
+                userId: user.id
+            }
+        });
         if (category) {
             throw new Error("Category already exists");
         }

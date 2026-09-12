@@ -25,7 +25,14 @@ export class CategoryService {
 
         if (!user) throw new Error("User not found")
 
-        const category = await Category.findOne({where: {name: data.name}})
+
+        const category = await Category.findOne(
+            {
+                where: {
+                    name: data.name,
+                    userId: user.id
+                }
+            })
 
         if(category){
             throw new Error("Category already exists")

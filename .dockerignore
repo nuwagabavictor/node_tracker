@@ -1,10 +1,48 @@
+# Dependencies
 node_modules
+
+# Build output
 dist
-.git
-.github
+
+# Environment files
 .env
 .env.*
-npm-debug.log
+
+# Version control
+.git
+.gitignore
+.github
+
+# IDE
+.idea
+.vscode
+
+# Documentation
+README.md
+API.md
+API.pdf
+API.docx
+
+# Docker files
 Dockerfile
 docker-compose.yml
-README.md
+.dockerignore
+docker-entrypoint.sh
+
+# Logs
+npm-debug.log
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage
+.nyc_output
+
+# Project specific
+ecosystem.config.js
