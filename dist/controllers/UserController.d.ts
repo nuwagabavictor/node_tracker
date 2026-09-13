@@ -12,7 +12,7 @@ export declare const passwordFactorSchema: z.ZodObject<{
     password: z.ZodString;
     confirmPassword: z.ZodString;
 }, z.core.$strip>;
-export declare function registerHandler(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+export declare function registerHandler(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function loginHandler(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 export declare function changePassword(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 export declare function refreshHandler(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;

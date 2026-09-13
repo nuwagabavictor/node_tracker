@@ -98,7 +98,7 @@ async function findAllTransaction(req, res, next) {
         });
         const data = transactions.map(transaction => ({
             id: transaction.id,
-            category: transaction.category.name,
+            categoryName: transaction.category.name,
             categoryId: transaction.category.id,
             categoryType: transaction.category.type,
             transactionType: transaction.type,
@@ -136,7 +136,7 @@ async function findTransaction(req, res, next) {
             throw new Error("Transaction not found");
         const data = {
             id: transaction.id,
-            category: transaction.category.name,
+            categoryName: transaction.category.name,
             categoryId: transaction.category.id,
             categoryType: transaction.category.type,
             transactionType: transaction.type,

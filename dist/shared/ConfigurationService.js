@@ -4,7 +4,7 @@ exports.ConfigurationService = void 0;
 const GlobalConfiguration_1 = require("../Entities/GlobalConfiguration");
 const GlobalConstants_1 = require("../constants/GlobalConstants");
 class ConfigurationService {
-    async createDefaults(user) {
+    async createDefaults(user, manager) {
         const configurations = [
             GlobalConfiguration_1.GlobalConfiguration.createConfig({
                 name: GlobalConstants_1.GlobalConstants.ENABLE_DAILY_EMAIL_REMAINDER,
@@ -15,7 +15,7 @@ class ConfigurationService {
                 name: GlobalConstants_1.GlobalConstants.ENABLE_TWO_FACTOR_AUTH,
             })
         ];
-        await GlobalConfiguration_1.GlobalConfiguration.save(configurations);
+        await manager.save(GlobalConfiguration_1.GlobalConfiguration, configurations);
     }
 }
 exports.ConfigurationService = ConfigurationService;
