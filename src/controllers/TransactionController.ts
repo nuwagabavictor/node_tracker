@@ -176,7 +176,7 @@ export async function findTransaction(req: Request, res: Response, next: NextFun
 
         const data = {
             id: transaction.id,
-            category: transaction.category.name,
+            categoryName: transaction.category.name,
             categoryId: transaction.category.id,
             categoryType: transaction.category.type,
             transactionType: transaction.type,
