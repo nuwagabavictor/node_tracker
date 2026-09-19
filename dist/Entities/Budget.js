@@ -44,6 +44,8 @@ let Budget = Budget_1 = class Budget extends typeorm_1.BaseEntity {
         budget.startDate = startDate;
         budget.endDate = endDate;
         budget.active = true;
+        budget.amountSpent = 0;
+        budget.exceededAmount = 0;
         return budget;
     }
     changes(params) {
@@ -161,11 +163,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Budget.prototype, "userNotified", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "amount_spent", type: "decimal", precision: 15, scale: 2 }),
+    (0, typeorm_1.Column)({ name: "amount_spent", type: "decimal", precision: 15, scale: 2, nullable: true }),
     __metadata("design:type", Number)
 ], Budget.prototype, "amountSpent", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "amount_exceeded", type: "decimal", precision: 15, scale: 2 }),
+    (0, typeorm_1.Column)({ name: "amount_exceeded", type: "decimal", precision: 15, scale: 2, nullable: true }),
     __metadata("design:type", Number)
 ], Budget.prototype, "exceededAmount", void 0);
 __decorate([
