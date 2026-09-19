@@ -25,7 +25,7 @@ export class TransactionCreatedBusinessEvent extends AbstractBusinessEvent<Trans
         return {
             objectId: this.getAggregateRootId(),
             objectType: BusinessCategoryType.TRANSACTION.toString(),
-            message: `${this.get().description} Transaction Created`,
+            message: `${this.get().category.name} Transaction Created`,
             eventType: this.getType(),
             category: this.getCategory(),
             timestamp: new Date(),
