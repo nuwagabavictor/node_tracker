@@ -54,10 +54,10 @@ export class Budget extends BaseEntity {
     @Column({ name: "user_notified", default: false})
     userNotified!: boolean;
 
-    @Column({ name: "amount_spent", type: "decimal", precision: 15, scale: 2 })
+    @Column({ name: "amount_spent", type: "decimal", precision: 15, scale: 2, nullable: true })
     amountSpent!: number;
 
-    @Column({ name: "amount_exceeded", type: "decimal", precision: 15, scale: 2 })
+    @Column({ name: "amount_exceeded", type: "decimal", precision: 15, scale: 2, nullable: true })
     exceededAmount!: number;
 
     @CreateDateColumn()
@@ -84,6 +84,8 @@ export class Budget extends BaseEntity {
         budget.startDate = startDate;
         budget.endDate = endDate;
         budget.active = true;
+        budget.amountSpent = 0;
+        budget.exceededAmount = 0;
 
         return budget;
     }
