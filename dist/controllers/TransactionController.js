@@ -5,6 +5,7 @@ exports.createTransaction = createTransaction;
 exports.updateTransaction = updateTransaction;
 exports.findAllTransaction = findAllTransaction;
 exports.findTransaction = findTransaction;
+exports.findTransactionSummary = findTransactionSummary;
 const zod_1 = require("zod");
 const Category_1 = require("../Entities/Category");
 const Transaction_1 = require("../Entities/Transaction");
@@ -147,6 +148,96 @@ async function findTransaction(req, res, next) {
         };
         res.status(201).json({
             transaction: data,
+        });
+    }
+    catch (e) {
+        next(e);
+    }
+}
+async function findTransactionSummary(req, res, next) {
+    try {
+        const userId = Number(req.user?.id);
+        const categoryId = req.query.category
+            ? Number(req.query.category)
+            : null;
+        const today = new Date();
+        const defaultStartDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        };
+        const startDate = req.query.startDate ??
+            formatDate(defaultStartDate);
+        const endDate = req.query.endDate ??
+            formatDate(today);
+        const query = Transaction_1.Transaction.createQueryBuilder("t")
+            .innerJoin("t.category", "category")
+            .where("t.userId = :userId", { userId })
+            .andWhere("t.type = :type", { type: "EXPENSE" });
+        if (categoryId) {
+            query.andWhere("t.categoryId = :categoryId", {
+                categoryId,
+            });
+        }
+        if (startDate) {
+            query.andWhere("DATE(t.transactionDate) >= :startDate", {
+                startDate,
+            });
+        }
+        if (endDate) {
+            query.andWhere("DATE(t.transactionDate) <= :endDate", {
+                endDate,
+            });
+        }
+        // -------------------------------------------------------------
+        // CATEGORY PROVIDED -> SINGLE CATEGORY SUMMARY
+        // -------------------------------------------------------------
+        if (categoryId) {
+            const result = await query
+                .select("COALESCE(SUM(t.amount), 0)", "amountSpent")
+                .addSelect("category.id", "categoryId")
+                .addSelect("category.name", "categoryName")
+                .groupBy("category.id")
+                .addGroupBy("category.name")
+                .getRawOne();
+            return res.status(200).json({
+                summary: {
+                    categoryId,
+                    categoryName: result?.categoryName ?? null,
+                    amountSpent: Number(result?.amountSpent ?? 0),
+                    startDate,
+                    endDate,
+                },
+            });
+        }
+        // -------------------------------------------------------------
+        // NO CATEGORY -> GROUP BY ALL CATEGORIES
+        // -------------------------------------------------------------
+        const grouped = await query
+            .select("category.id", "categoryId")
+            .addSelect("category.name", "categoryName")
+            .addSelect("category.type", "categoryType")
+            .addSelect("COALESCE(SUM(t.amount), 0)", "amountSpent")
+            .groupBy("category.id")
+            .addGroupBy("category.name")
+            .addGroupBy("category.type")
+            .orderBy("amountSpent", "DESC")
+            .getRawMany();
+        const totalSpent = grouped.reduce((sum, item) => sum + Number(item.amountSpent), 0);
+        return res.status(200).json({
+            summary: {
+                totalSpent,
+                startDate,
+                endDate,
+                categories: grouped.map((item) => ({
+                    categoryId: Number(item.categoryId),
+                    categoryName: item.categoryName,
+                    categoryType: item.categoryType,
+                    amountSpent: Number(item.amountSpent),
+                })),
+            },
         });
     }
     catch (e) {

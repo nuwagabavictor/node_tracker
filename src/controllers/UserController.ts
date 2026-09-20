@@ -223,7 +223,8 @@ export async function loginHandler(req: Request, res: Response, next: NextFuncti
                 username:user.getUsername(),
                 email:user.getEmail(),
                 role:user.getRole(),
-                isAuthenticated: true
+                isAuthenticated: true,
+                phone:user.phone
             }
 
         });

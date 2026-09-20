@@ -9,4 +9,5 @@ export declare function createTransaction(req: Request, res: Response, next: Nex
 export declare function updateTransaction(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function findAllTransaction(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function findTransaction(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function findTransactionSummary(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 //# sourceMappingURL=TransactionController.d.ts.map

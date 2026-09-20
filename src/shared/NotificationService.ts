@@ -84,12 +84,35 @@ export class NotificationService {
                 isRead: false
             },
             relations: {
-                notification: true
+                notification: true,
+                user: true
             },
             order: {
                 id: "DESC"
             }
         });
+    }
+
+    async getNotification(userId: number, id: number): Promise<NotificationMapper> {
+
+        const notification = await NotificationMapper.findOne({
+            where: {
+                id: id,
+                userId: userId,
+            },
+            relations: {
+                notification: true,
+                user: true
+            },
+            order: {
+                id: "DESC"
+            }
+        });
+
+        if (!notification) throw new Error("Notification not found")
+
+
+        return notification;
     }
 
     async getUnreadNotificationCount(userId: number): Promise<number> {

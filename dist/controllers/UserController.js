@@ -162,7 +162,8 @@ async function loginHandler(req, res, next) {
                 username: user.getUsername(),
                 email: user.getEmail(),
                 role: user.getRole(),
-                isAuthenticated: true
+                isAuthenticated: true,
+                phone: user.phone
             }
         });
     }
