@@ -56,12 +56,31 @@ class NotificationService {
                 isRead: false
             },
             relations: {
-                notification: true
+                notification: true,
+                user: true
             },
             order: {
                 id: "DESC"
             }
         });
+    }
+    async getNotification(userId, id) {
+        const notification = await NotificationMapper_1.NotificationMapper.findOne({
+            where: {
+                id: id,
+                userId: userId,
+            },
+            relations: {
+                notification: true,
+                user: true
+            },
+            order: {
+                id: "DESC"
+            }
+        });
+        if (!notification)
+            throw new Error("Notification not found");
+        return notification;
     }
     async getUnreadNotificationCount(userId) {
         return await NotificationMapper_1.NotificationMapper.count({

@@ -13,6 +13,7 @@ export declare class NotificationService {
     notifyUser(notification: NotificationData): Promise<void>;
     getAllNotifications(userId: number): Promise<NotificationMapper[]>;
     getUnreadNotifications(userId: number): Promise<NotificationMapper[]>;
+    getNotification(userId: number, id: number): Promise<NotificationMapper>;
     getUnreadNotificationCount(userId: number): Promise<number>;
     markAsRead(userId: number, notificationId: number): Promise<void>;
     markAllAsRead(userId: number): Promise<void>;
